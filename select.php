@@ -39,16 +39,7 @@ for($i=0;$i<2;$i++){
     <hr>
     <form action="judgement.php" method="POST">
         <?php
-            $echo = <<< EOM       
-            相手のカード: 
-            <img src="images\z01.png"><img src="images\z01.png">
-            <input type="hidden" name="leftCardFace" value = "{$CPU_hand['face']}">
-            <input type="hidden" name="leftCardsuit" value = "{$CPU_hand['suit']}">
-            <input type="hidden" name="leftCardkey" value = "{$CPU_hand['key']}">
-            <input type="hidden" name="righttCardFace" value = "{$Player_hand['face']}">
-            <input type="hidden" name="rightCardsuit" value = "{$Player_hand['suit']}">
-            <input type="hidden" name="rightCardkey" value = "{$Player_hand['key']}">
-            EOM;
+            var_dump($_SESSION['Player_hand']);
         ?>
     </form>
 
