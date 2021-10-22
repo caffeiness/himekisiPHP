@@ -7,13 +7,13 @@ function outputHandCard($card) {
         $img1 = $img . "s";
         break;
       case "heart":
-        $img1 = $img . "h";
+        $img1 = "h" . $img;
         break;
       case "diamond":
         $img1 = $img . "d";
         break;
       case "club":
-        $img1 = $img . "c";
+        $img1 = "c" . $img;
         break;
     }
     $img1 = $img1 . sprintf("%02d", $card['num']);
