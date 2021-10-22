@@ -34,14 +34,27 @@ for($i=0;$i<2;$i++){
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 </head>
 <body>
-<form action="judgement.php" method="POST">
-<input type="submit" value="カードを補充する">
-<input type="hidden" value=<?php echo $win; ?>  name="win">
-<input type="hidden" value=<?php echo $lose; ?> name="lose">
-<input type="hidden" value=<?php echo $aiko; ?> name="aiko">
-</form>
+    <div class="text-center">
+    <h1>姫騎士の魂</h1>
+    <hr>
+    <form action="judgement.php" method="POST">
+        <?php
+            $echo = <<< EOM       
+            相手のカード: 
+            <img src="images\z01.png"><img src="images\z01.png">
+            <input type="hidden" name="leftCardFace" value = "{$CPU_hand['face']}">
+            <input type="hidden" name="leftCardsuit" value = "{$CPU_hand['suit']}">
+            <input type="hidden" name="leftCardkey" value = "{$CPU_hand['key']}">
+            <input type="hidden" name="righttCardFace" value = "{$Player_hand['face']}">
+            <input type="hidden" name="rightCardsuit" value = "{$Player_hand['suit']}">
+            <input type="hidden" name="rightCardkey" value = "{$Player_hand['key']}">
+            EOM;
+        ?>
+    </form>
+
+
 <from action="top.php" method="GET">
-<input type="submit" value="はじめから？">
+<input type="submit" value="勝負">
 <input type="hidden" value=0 name="win">
 <input type="hidden" value=0 name="lose">
 <input type="hidden" value=0 name="aiko">
