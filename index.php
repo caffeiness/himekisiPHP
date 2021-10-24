@@ -1,9 +1,7 @@
 <?php
-require_once('deck.class.php');
-require_once('game.class.php');
-require_once('judgement.class.php');
-define('MAXVALUE', 21);
-
+require_once('deck.php');
+require_once('game.php');
+require_once('judgement.php');
 session_start();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $button =$_POST['button'];
@@ -23,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $judgement = $judge->bustOrBlackjack($user_points, 'あなた');
             $_SESSION['messages'][] = 'あなたの得点は:' . $user_points;
             break;
-        case 'draw':
+        case 'addcard':
             $_SESSION['messages'][] = $game->showCard('あなた');
             $_SESSION['user_hand'][] = $game->nextDraw();
             array_splice($_SESSION['deck'], 0, 1);
@@ -31,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $judgement = $judge->bustOrBlackjack($user_points, 'あなた');
             $_SESSION['messages'][] = 'あなたの得点は:' . $user_points;
             break;
-        case 'stop':
+        case 'game':
             $user_points = $game->totalPoints($_SESSION['user_hand']);
             $cpu_points = $game->totalPoints($_SESSION['cpu_hand']);
             $_SESSION['messages'][] = 'CPUの2枚目のカードは' . $_SESSION['secret_card'] . 'でした';
@@ -64,29 +62,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 ?>
-<html lang="ja">
-<head>
-    <title>BlackJack</title>
+
+
+<html>
+<head lang="ja">
+<meta http-equiv="Content-Type" content="text/html; charset=utf8">
+<meta name = "viewport" content = "width=device-width, intial-scale = 1.0">
+<title>姫騎士の魂</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 </head>
 <body>
-    <h1>BlackJack</h1>
-    <?php foreach ($_SESSION['messages'] as $msg) : ?>
-    <p><?= $msg ?></p>
-    <?php endforeach; ?>
-    <?php if (!empty($judgement)) : ?>
-    <?php foreach ($judgement as $row) : ?>
-    <p><?= $row; ?></p>
-    <?php endforeach ?>
-    <form action='' method='post'>
-        <input type="submit" name='button' value='newgame'>
+    <div class="text-center">
+    <h1>姫騎士の魂</h1>
+    <hr>
+    相手のカード:
+    <img src = "images/z01.png" height = 150 width = 100>
+    <img src = "images/z01.png" height = 150 width = 100>
+    <form action="judgement.php" method="POST">
+        <?php
+            echo aiteno;
+        ?>
     </form>
-    <?php else : ?>
-    <p>カードをひきますか？</p>
+
+    <p>カードをひきますか？(チップが一枚必要)</p>
     <form action='' method='post'>
         <input type='submit' name='button' value='newgame'>
-        <input type='submit' name='button' value='draw'>
-        <input type='submit' name='button' value='stop'>
+        <input type='submit' name='button' value='addcard'>　<!-- カードを追加する -->
+        <input type='submit' name='button' value='game'>  <!-- 勝負に移る -->
     </form>
-    <?php endif; ?>
 </body>
 </html>
+
+
+<!--
+<from action="top.php" method="GET">
+<input type="submit" value="勝負">
+<input type="hidden" value=0 name="win">
+<input type="hidden" value=0 name="lose">
+<input type="hidden" value=0 name="aiko">
+-->
