@@ -1,5 +1,4 @@
 <?php
-
     $deck = [];
     $faces = [];
     $suits = array("h","c");
@@ -27,7 +26,7 @@
     function outputHandCard($card) {
         $img = "images/" . $card;
         $img1 = $img . ".png";
-        echo "<img src=" . $img1 . " width=210 height=140><br>";
+        echo "<img src=" . $img1 . " width=100 height=150>";
     };
 ?>
 

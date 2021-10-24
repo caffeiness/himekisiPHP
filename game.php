@@ -1,27 +1,4 @@
 <?php
-
-function outputHandCard($ca) {
-    $img = "images/";
-    switch ($card['mark']) {
-      case "spade":
-        $img1 = $img . "s";
-        break;
-      case "heart":
-        $img1 = "h" . $img;
-        break;
-      case "diamond":
-        $img1 = $img . "d";
-        break;
-      case "club":
-        $img1 = "c" . $img;
-        break;
-    }
-    $img1 = $img1 . sprintf("%02d", $card['num']);
-    $img1 = $img1 . ".png";
-    $value = $card['mark'] . "," . $card['num'];
-    echo "<button type=\"submit\" name=\"hand\" value=$value class=\"gazo\"><img src=" . $img1 . " width=100% height=100%><br></button>";
-  }
-
 function cardOutput($fieldCards) {
     $img = "images/";
     echo "<div>";
@@ -80,12 +57,4 @@ function countCards($hands) {
     return $count;
     }
 
-?>
-
-<?php
-  function outputHandCard($card) {
-    $img = "images/" . $card;
-    $img1 = $img . ".png";
-    echo "<img src=" . $img1 . " width=150 height=100><br>";
-}
 ?>

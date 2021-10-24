@@ -1,66 +1,29 @@
 <?php
-require_once('deck.php');
-require_once('game.php');
-require_once('judgement.php');
-session_start();
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $button =$_POST['button'];
-    $game = new Game;
-    $judge = new Judgement;
-    switch ($button) {
-        case 'newgame':
-            $ceatedeck = new CreateDeck;
-            $_SESSION['deck'] = $ceatedeck->shuffleDeck();
-            $_SESSION['messages'] = $game->startGame();
-            $_SESSION['user_hand'] = $game->firstDraw(); 
-            array_splice($_SESSION['deck'], 0, 2); 
-            $_SESSION['cpu_hand'] = $game->firstDraw();
-            $_SESSION['secret_card'] = $_SESSION['deck'][1];
-            array_splice($_SESSION['deck'], 0, 2);
-            $user_points = $game->totalPoints($_SESSION['user_hand']);
-            $judgement = $judge->bustOrBlackjack($user_points, 'あなた');
-            $_SESSION['messages'][] = 'あなたの得点は:' . $user_points;
-            break;
-        case 'addcard':
-            $_SESSION['messages'][] = $game->showCard('あなた');
-            $_SESSION['user_hand'][] = $game->nextDraw();
-            array_splice($_SESSION['deck'], 0, 1);
-            $user_points = $game->totalPoints($_SESSION['user_hand']);
-            $judgement = $judge->bustOrBlackjack($user_points, 'あなた');
-            $_SESSION['messages'][] = 'あなたの得点は:' . $user_points;
-            break;
-        case 'game':
-            $user_points = $game->totalPoints($_SESSION['user_hand']);
-            $cpu_points = $game->totalPoints($_SESSION['cpu_hand']);
-            $_SESSION['messages'][] = 'CPUの2枚目のカードは' . $_SESSION['secret_card'] . 'でした';
-            $judgement = $judge->bustOrBlackjack($cpu_points, 'CPU');
-            if (empty($judgement) && $cpu_points < 17) {
-                for ($i=0; $cpu_points < 17; $i++) {
-                    $_SESSION['messages'][] = $game->showCard('CPU');
-                    $_SESSION['cpu_hand'][] = $game->nextDraw();
-                    array_splice($_SESSION['deck'], 0, 1);
-                    $cpu_points = $game->totalPoints($_SESSION['cpu_hand']);
-                }
-                $_SESSION['messages'][] = 'CPUの得点は:' . $cpu_points;
-                $judgement = $judge->bustOrBlackjack($cpu_points, 'CPU');
-                if (empty($judgement)) {
-                    $judgement = $judge->checkTheWinner($user_points, $cpu_points);
-                }
-            } else {
-                $_SESSION['messages'][] = 'CPUの得点は:' . $cpu_points;
-                $judgement = $judge->checkTheWinner($user_points, $cpu_points);
-            }
-            break;
-        default :
-            echo 'error';
-            exit;
-    }
-} else {
-    echo "<form action='' method='post'>";
-    echo "<input type='submit' name='button' value='newgame'>";
-    echo "</form>";
-    exit;
-}
+
+for($i = 1;$i <= 13;$i++){
+        $faces[] = $i;
+    };
+    
+
+$suits = array("h","c");
+    
+foreach($suits as $suit){
+    foreach($faces as $face){
+        $deck[]  = $suit . $face;
+    };
+};
+
+shuffle($deck);
+
+$Player_hand = [];
+$CPU_hand = [];
+for($i=0;$i<2;$i++){
+    $Player_hand[] = array_shift($deck);
+    $CPU_hand[] = array_shift($deck);
+    $conversion = implode(",", $Player_hand);
+    $conversion = implode(",", $CPU_hand);
+};
+
 ?>
 
 
@@ -75,29 +38,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="text-center">
     <h1>姫騎士の魂</h1>
     <hr>
-    相手のカード:
-    <img src = "images/z01.png" height = 150 width = 100>
-    <img src = "images/z01.png" height = 150 width = 100>
-    <form action="judgement.php" method="POST">
+    相手のカード: 
+        <img src="z01.png" width="100" height="150">
+        <img src="z01.png" width="100" height="150">
         <?php
-            echo aiteno;
-        ?>
-    </form>
+          require_once 'function.php';
+          echo '<br>あなたのカード:';
+          for($i=0;$i<2;$i++){
+            outputHandCard($Player_hand[$i]);
+          };
+        ?>  
+    <br>
+<!--
+<input type="hidden" name="leftCardFace" value = "{$CPU_hand['face']}">
+<input type="hidden" name="leftCardsuit" value = "{$CPU_hand['suit']}">
+<input type="hidden" name="leftCardkey" value = "{$CPU_hand['key']}">
+<input type="hidden" name="righttCardFace" value = "{$Player_hand['face']}">
+<input type="hidden" name="rightCardsuit" value = "{$Player_hand['suit']}">
+<input type="hidden" name="rightCardkey" value = "{$Player_hand['key']}">
+-->
 
-    <p>カードをひきますか？(チップが一枚必要)</p>
-    <form action='' method='post'>
-        <input type='submit' name='button' value='newgame'>
-        <input type='submit' name='button' value='addcard'>　<!-- カードを追加する -->
-        <input type='submit' name='button' value='game'>  <!-- 勝負に移る -->
-    </form>
+
+<form action="result.php" method="GET">
+    <input type="submit" value="勝負">
+    <input type="radio" name="janken" value=<?php echo $CPU_hand[0]; ?>><?php echo $CPU_hand[0]; ?>
+    <input type="radio" name="janken" value="{$Player_hand}">
+    <input type="hidden" value=<?php echo $CPU_hand[0]; ?> name="CPU">
+    <input type="hidden" value="{$Player_hand}" name="Player">
+</form>
 </body>
 </html>
-
-
-<!--
-<from action="top.php" method="GET">
-<input type="submit" value="勝負">
-<input type="hidden" value=0 name="win">
-<input type="hidden" value=0 name="lose">
-<input type="hidden" value=0 name="aiko">
--->
