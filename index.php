@@ -1,5 +1,6 @@
 <?php
 
+session_start();
 for($i = 1;$i <= 13;$i++){
         $faces[] = $i;
     };
@@ -32,7 +33,7 @@ for($i=0;$i<2;$i++){
 <meta http-equiv="Content-Type" content="text/html; charset=utf8">
 <meta name = "viewport" content = "width=device-width, intial-scale = 1.0">
 <title>姫騎士の魂</title>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<link rel="stylesheet" href="index.css">
 </head>
 <body>
     <div class="text-center">
@@ -59,7 +60,7 @@ for($i=0;$i<2;$i++){
 -->
 
 
-<form action="result.php" method="GET">
+<form action="result.php" method="POST">
     <input type="submit" value="勝負">
     <input type="radio" name="janken" value=<?php echo $CPU_hand[0]; ?>><?php echo $CPU_hand[0]; ?>
     <?php 
@@ -67,9 +68,11 @@ for($i=0;$i<2;$i++){
         echo "<input type='hidden' name='CPU[]' value=" . $CPU_hand[$i] . ">";
     }
     ?>
-    <!-- <input type="hidden" value=<?php echo $CPU_hand[1]; ?> name="CPU2"> -->
-    <input type="hidden" value=<?php echo $Player_hand[0]; ?> name="Player1">
-    <input type="hidden" value=<?php echo $Player_hand[1]; ?> name="Player2">
+    <?php 
+    for($i=0; $i < count($Player_hand); $i++) {
+        echo "<input type='hidden' name='Player[]' value=" . $Player_hand[$i] . ">";
+    }
+    ?>
 </form>
 
 </body>
