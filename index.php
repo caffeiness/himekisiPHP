@@ -39,8 +39,8 @@ for($i=0;$i<2;$i++){
     <h1>姫騎士の魂</h1>
     <hr>
     相手のカード: 
-        <img src="z01.png" width="100" height="150">
-        <img src="z01.png" width="100" height="150">
+        <img src="images/z01.png" width="100" height="150">
+        <img src="images/z01.png" width="100" height="150">
         <?php
           require_once 'function.php';
           echo '<br>あなたのカード:';
@@ -62,9 +62,15 @@ for($i=0;$i<2;$i++){
 <form action="result.php" method="GET">
     <input type="submit" value="勝負">
     <input type="radio" name="janken" value=<?php echo $CPU_hand[0]; ?>><?php echo $CPU_hand[0]; ?>
-    <input type="radio" name="janken" value="{$Player_hand}">
-    <input type="hidden" value=<?php echo $CPU_hand[0]; ?> name="CPU">
-    <input type="hidden" value="{$Player_hand}" name="Player">
+    <?php 
+    for($i=0; $i < count($CPU_hand); $i++) {
+        echo "<input type='hidden' name='CPU[]' value=" . $CPU_hand[$i] . ">";
+    }
+    ?>
+    <!-- <input type="hidden" value=<?php echo $CPU_hand[1]; ?> name="CPU2"> -->
+    <input type="hidden" value=<?php echo $Player_hand[0]; ?> name="Player1">
+    <input type="hidden" value=<?php echo $Player_hand[1]; ?> name="Player2">
 </form>
+
 </body>
 </html>
