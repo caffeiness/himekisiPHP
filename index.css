@@ -35,3 +35,13 @@ h1 {
   color:#fff;
   text-shadow:1px 1px #83511d;
 }
+/*文中の文字を囲む*/
+.kakomu{
+	padding:2px 8px; /* 枠と文字の空間 */
+	margin:0 5px; /* 枠の外の空間 */
+	background-color:#f9f9f9; /* 枠の背景色 */
+	border:1px solid #777; /* 枠の線の太さ・種類・色 */
+	border-radius:2px; /* 枠の角を丸くする */
+	box-shadow: 1px 2px 2px #ddd; /*影をいれる*/
+  font-family: "MS Pゴシック"
+}

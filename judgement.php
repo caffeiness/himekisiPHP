@@ -1,34 +1,28 @@
 <?php
-
-Class Judgement 
-{
-    private $_messages = [];
-    public function winorlose($user_value,$cpu_value, $name) {
-        if ($user_value == $cpu_value) {
-            $this->_messages[] = '引き分けです！！';
-        } elseif ($user_value > $cpu_value) {
-            $this->_messages[] = 'あなたの勝ちです！！';
-        } else {
-            $this->_messages[] = 'CPUの勝ちです！！';
-        }
-
-        #if ($user_value == MAXVALUE) {
-            #$this->_messages[] = $name . 'の勝ちです！！';
-        #} elseif ($points > MAXVALUE) {
-            #$this->_messages[] = $name . 'の負けです！！';
-            #return $this->_messages;
-        #}
+function result_num($number) {
+  if($number[0][0] == $number[1][0]){
+    //$result = preg_replace('/[^0-9]/', '', $number[0][1]));
+    $card = intval(preg_replace('/[^0-9]/', '', $number[0])) + intval(preg_replace('/[^0-9]/', '', $number[1]));
+  }else{
+    $card = intval(preg_replace('/[^0-9]/', '', $number[0])) - intval(preg_replace('/[^0-9]/', '', $number[1]));
+    if($card < 0){
+      $card *= -1; 
     }
+  };
+  return $card;
+};
 
-    public function checkTheWinner($user_point, $cpu_point) {
-        if ($user_point == $cpu_point) {
-            $this->_messages[] = '引き分けです！！';
-        } elseif ($user_point > $cpu_point) {
-            $this->_messages[] = 'あなたの勝ちです！！';
-        } else {
-            $this->_messages[] = 'CPUの勝ちです！！';
-        }
-        return $this->_messages;
+function WinorLose($CPU_num,$Player_num,$CPU_tip,$Player_tip){
+  if($CPU_num < $Player_num){
+    echo '<font color="white">あなたの勝ちです。</font>';
+    $CPU_tip -= 1;
+    $Player_tip += 1;
+  }else{
+    echo '<font color="white">あなたの負けです。</font>';
+    $CPU_tip += 1;
+    $Player_tip -= 1;
+  };
 
-    }
-}
+  return array($CPU_tip,$Player_tip);
+};
+?>
