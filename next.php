@@ -1,45 +1,11 @@
-<?php
-
-for($i = 1;$i <= 13;$i++){
-        $faces[] = $i;
-    };
-    
-
-$suits = array("h","c");
-    
-foreach($suits as $suit){
-    foreach($faces as $face){
-        $deck[]  = $suit . $face;
-    };
-};
-
-shuffle($deck);
-
-$Player_hand = [];
-$CPU_hand = [];
-for($i=0;$i<2;$i++){
-    $Player_hand[] = array_shift($deck);
-    $CPU_hand[] = array_shift($deck);
-    $conversion = implode(",", $Player_hand);
-    $conversion = implode(",", $CPU_hand);
-};
-
-if(isset($_POST["Player_tip"])){  //勝った回数
-   $Player_tip = $_POST["Player_tip"];
-   } else {
-   $Player_tip = 5;
-};
-
-if(isset($_POST["CPU_tip"])){  //勝った回数
-   $CPU_tip = $_POST["CPU_tip"];
-   } else {
-   $CPU_tip = 5;
-};
-
-
-//$Player_tip = 5;
-//$CPU_tip = 5; 
-
+<?php 
+  $CPU_tip = $_POST["CPU_tip"];
+  $Player_tip = $_POST["Player_tip"];
+  $CPU_hand = $_POST["CPU"];
+  $Player_hand = $_POST["Player"];
+  $deck = $_POST["deck"];
+  $Player_hand[] = array_shift($deck);
+  //$conversion = implode(",", $Player_hand);
 ?>
 
 
@@ -69,27 +35,6 @@ if(isset($_POST["CPU_tip"])){  //勝った回数
           };
         ?>  
     <br><br>
-    <form action="next.php" method="POST">
-        <input type="submit" value="カードを引く">
-        <?php 
-        for($i=0; $i < count($CPU_hand); $i++) {
-            echo "<input type='hidden' name='CPU[]' value=" . $CPU_hand[$i] . ">";
-        }
-        ?>
-        <?php 
-        for($i=0; $i < count($Player_hand); $i++) {
-            echo "<input type='hidden' name='Player[]' value=" . $Player_hand[$i] . ">";
-        }
-        ?>
-        <?php $Player_tip -= 1; ?>
-        <input type='hidden' name='CPU_tip' value=<?php echo $CPU_tip; ?>>
-        <input type='hidden' name='Player_tip' value=<?php echo $Player_tip; ?>>
-        <?php 
-        for($i=0; $i < count($deck); $i++) {
-            echo "<input type='hidden' name='deck[]' value=".$deck[$i].">";
-        }
-        ?>
-    </form>
     <form action="result.php" method="POST">
         <?php 
         for($i=0; $i < count($Player_hand); $i++) {
