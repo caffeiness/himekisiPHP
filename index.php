@@ -24,8 +24,21 @@ for($i=0;$i<2;$i++){
     $conversion = implode(",", $CPU_hand);
 };
 
-$Player_tip = 5;
-$CPU_tip = 5; 
+if(isset($_POST["Player_tip"])){  //勝った回数
+   $Player_tip = $_POST["Player_tip"];
+   } else {
+   $Player_tip = 5;
+};
+
+if(isset($_POST["CPU_tip"])){  //勝った回数
+   $CPU_tip = $_POST["CPU_tip"];
+   } else {
+   $CPU_tip = 5;
+};
+
+
+//$Player_tip = 5;
+//$CPU_tip = 5; 
 
 ?>
 
@@ -44,21 +57,26 @@ $CPU_tip = 5;
     <img src="images/tipkuro.png" width="100" height="100">
     <span class="kakomu"><font color="black"><?php echo $CPU_tip ?></font></span>
     <font color="white">相手のカード:</font>
-        <img src="z01.png" width="100" height="150">
-        <img src="z01.png" width="100" height="150">
+        <img src="images/z01.png" width="100" height="150">
+        <img src="images/z01.png" width="100" height="150">
         <br><img src="images/tipkuro.png" width="100" height="100">
         <span class="kakomu"><font color="black"><?php echo $Player_tip ?></font></span>
         <?php
           require_once 'function.php';
           echo '<font color="white">あなたのカード:</font>';
-          for($i=0;$i<2;$i++){
+          for($i=0;$i<count($Player_hand);$i++){
             outputHandCard($Player_hand[$i]);
           };
         ?>  
-    <br>
+    <br><br>
     <form action="result.php" method="POST">
+        <?php 
+        for($i=0; $i < count($Player_hand); $i++) {
+            echo "<input type='checkbox' name='choice[]' value=".$Player_hand[$i].">";
+            echo '<font color="white">'.$Player_hand[$i].'</font>';
+        }
+        ?>
         <input type="submit" value="勝負">
-        <input type="radio" name="choice" value=<?php echo $Player_hand[0]; ?>><?php echo $CPU_hand[0]; ?>
         <?php 
         for($i=0; $i < count($CPU_hand); $i++) {
             echo "<input type='hidden' name='CPU[]' value=" . $CPU_hand[$i] . ">";

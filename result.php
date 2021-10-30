@@ -2,7 +2,7 @@
   $CPU_tip = $_POST["CPU_tip"];
   $Player_tip = $_POST["Player_tip"];
   $CPU_result = $_POST["CPU"];
-  $Player_result = $_POST["Player"];
+  $Player_result = $_POST["choice"]; //チェックしてなかった時の処理をどうするか 
   require_once 'function.php';
   require_once 'judgement.php';
   //echo '<br>CPUのカード:';
@@ -38,6 +38,23 @@
           for($i=0;$i<2;$i++){
             outputHandCard($Player_result[$i]);
           };
+
+          if($CPU_tip == 0){
+            echo 'あなたの勝ちです！';
+          }elseif($Player_tip == 0){
+            echo '<font color="white">チップがなくなりました、あなたの負けです。</font>';
+          };
+
         ?><br>
+        <br>
+    <form action="index.php" method="POST">
+      <input type="submit" value="もう一度やる？">
+      <input type="hidden" value=<?php echo $CPU_tip; ?>  name="CPU_tip">
+      <input type="hidden" value=<?php echo $Player_tip; ?> name="Player_tip">
+    </form>
+    <form action="index.php" method="POST">
+      <input type="submit" value="はじめから？">
+      <input type="hidden" value= name="CPU_tip">
+      <input type="hidden" value= name="Player_tip">
   </body>
 </html>
