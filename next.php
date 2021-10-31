@@ -1,4 +1,5 @@
 <?php 
+  $Pool_tip = $_POST["Pool_tip"];
   $CPU_tip = $_POST["CPU_tip"];
   $Player_tip = $_POST["Player_tip"];
   $CPU_hand = $_POST["CPU"];
@@ -6,6 +7,13 @@
   $deck = $_POST["deck"];
   $Player_hand[] = array_shift($deck);
   //$conversion = implode(",", $Player_hand);
+
+  if(isset($_POST["draw"])){  //勝った回数
+   $Pool_tip += 1;
+   $Player_tip -= 1;
+   } else {
+   $Pool_tip = 0;
+};
 ?>
 
 
@@ -53,6 +61,7 @@
             echo "<input type='hidden' name='Player[]' value=" . $Player_hand[$i] . ">";
         }
         ?>
+        <input type='hidden' name='Pool_tip' value=<?php echo $Pool_tip; ?>>
         <input type='hidden' name='CPU_tip' value=<?php echo $CPU_tip; ?>>
         <input type='hidden' name='Player_tip' value=<?php echo $Player_tip; ?>>
     </form>

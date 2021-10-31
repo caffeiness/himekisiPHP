@@ -24,21 +24,25 @@ for($i=0;$i<2;$i++){
     $conversion = implode(",", $CPU_hand);
 };
 
-if(isset($_POST["Player_tip"])){  //勝った回数
+
+if($_POST["Pool_tip"] != 0){  
+   $Pool_tip = $_POST["Pool_tip"];
+   } else {
+   $Pool_tip = 0;
+};
+
+if(isset($_POST["Player_tip"])){ 
    $Player_tip = $_POST["Player_tip"];
    } else {
    $Player_tip = 5;
 };
 
-if(isset($_POST["CPU_tip"])){  //勝った回数
+if(isset($_POST["CPU_tip"])){
    $CPU_tip = $_POST["CPU_tip"];
    } else {
    $CPU_tip = 5;
 };
 
-
-//$Player_tip = 5;
-//$CPU_tip = 5; 
 
 ?>
 
@@ -70,7 +74,7 @@ if(isset($_POST["CPU_tip"])){  //勝った回数
         ?>  
     <br><br>
     <form action="next.php" method="POST">
-        <input type="submit" value="カードを引く">
+        <input type="submit" name="draw" value="カードを引く">
         <?php 
         for($i=0; $i < count($CPU_hand); $i++) {
             echo "<input type='hidden' name='CPU[]' value=" . $CPU_hand[$i] . ">";
@@ -81,7 +85,7 @@ if(isset($_POST["CPU_tip"])){  //勝った回数
             echo "<input type='hidden' name='Player[]' value=" . $Player_hand[$i] . ">";
         }
         ?>
-        <?php $Player_tip -= 1; ?>
+        <input type='hidden' name='Pool_tip' value=<?php echo $Pool_tip; ?>>
         <input type='hidden' name='CPU_tip' value=<?php echo $CPU_tip; ?>>
         <input type='hidden' name='Player_tip' value=<?php echo $Player_tip; ?>>
         <?php 
@@ -108,6 +112,7 @@ if(isset($_POST["CPU_tip"])){  //勝った回数
             echo "<input type='hidden' name='Player[]' value=" . $Player_hand[$i] . ">";
         }
         ?>
+        <input type='hidden' name='Pool_tip' value=<?php echo $Pool_tip; ?>>
         <input type='hidden' name='CPU_tip' value=<?php echo $CPU_tip; ?>>
         <input type='hidden' name='Player_tip' value=<?php echo $Player_tip; ?>>
     </form>

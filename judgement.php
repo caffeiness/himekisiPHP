@@ -12,17 +12,28 @@ function result_num($number) {
   return $card;
 };
 
-function WinorLose($CPU_num,$Player_num,$CPU_tip,$Player_tip){
-  if($CPU_num < $Player_num){
+function WinorLose($CPU_num,$Player_num,$Pool_tip,$CPU_tip,$Player_tip){
+  //引き分けの処理
+  //Pooltipの追加
+  if($CPU_num == $Player_num){
+    echo '<font color="white">引き分けです。</font>';
+    $Pool_tip += 2;
+    $CPU_tip -= 1;
+    $Player_tip -= 1;
+  }elseif($CPU_num < $Player_num){
     echo '<font color="white">あなたの勝ちです。</font>';
     $CPU_tip -= 1;
     $Player_tip += 1;
+    $Player_tip += $Pool_tip;
+    $Pool_tip = 0;
   }else{
     echo '<font color="white">あなたの負けです。</font>';
     $CPU_tip += 1;
+    $CPU_tip += $Pool_tip;
     $Player_tip -= 1;
+    $Pool_tip = 0;
   };
 
-  return array($CPU_tip,$Player_tip);
+  return array($CPU_tip,$Player_tip,$Pool_tip);
 };
 ?>
