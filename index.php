@@ -74,7 +74,11 @@ if(isset($_POST["CPU_tip"])){
         ?>  
     <br><br>
     <form action="next.php" method="POST">
-        <input type="submit" name="draw" value="カードを引く">
+        <?php
+          if($CPU_tip > 1 && $Player_tip > 1){
+            echo '<input type="submit" name="draw" value="カードを引く">';
+          }
+        ?>
         <?php 
         for($i=0; $i < count($CPU_hand); $i++) {
             echo "<input type='hidden' name='CPU[]' value=" . $CPU_hand[$i] . ">";

@@ -41,7 +41,7 @@
           for($i=0;$i<2;$i++){
             outputHandCard($Player_result[$i]);
           };
-
+          echo '<br>';
           if($CPU_tip <= 0){
             echo '<br><font color="white">あなたの勝ちです！</font>';
           }elseif($Player_tip <= 0){
@@ -52,11 +52,16 @@
         ?><br>
         <br>
     <form action="index.php" method="POST">
-      <input type="submit" value="もう一度やる？">
+      <?php
+        if($CPU_tip > 0 && $Player_tip > 0){
+          echo '<input type="submit" value="もう一度やる？">';
+        }
+      ?>
       <input type="hidden" value=<?php echo $CPU_tip; ?>  name="CPU_tip">
       <input type="hidden" value=<?php echo $Player_tip; ?> name="Player_tip">
       <input type="hidden" value=<?php echo $Pool_tip; ?> name="Pool_tip">
-    </form>
+    </form>  
+
     <form action="index.php" method="POST">
       <input type="submit" value="はじめから？">
       <input type="hidden" value= name="Pool_tip">
