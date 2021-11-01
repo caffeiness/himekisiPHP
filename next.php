@@ -6,8 +6,8 @@
   $Player_hand = $_POST["Player"];
   $deck = $_POST["deck"];
   $Player_hand[] = array_shift($deck);
-  //$conversion = implode(",", $Player_hand);
 
+  //引き分けだった時に浮いたチップの引継ぎ処理
   if(isset($_POST["draw"])){  //勝った回数
    $Pool_tip += 1;
    $Player_tip -= 1;

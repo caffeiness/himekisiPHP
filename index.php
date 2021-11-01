@@ -1,49 +1,43 @@
 <?php
+  //デッキ作成、ハートとクローバーのみ
+  for($i = 1;$i <= 13;$i++){
+          $faces[] = $i;
+      };
+  $suits = array("h","c");
+  foreach($suits as $suit){
+      foreach($faces as $face){
+          $deck[]  = $suit . $face;
+      };
+  };
+  shuffle($deck);
+  //カードを配って手札の作成
+  $Player_hand = [];
+  $CPU_hand = [];
+  for($i=0;$i<2;$i++){
+      $Player_hand[] = array_shift($deck);
+      $CPU_hand[] = array_shift($deck);
+      //$conversion = implode(",", $Player_hand);
+      //$conversion = implode(",", $CPU_hand);
+  };
 
-for($i = 1;$i <= 13;$i++){
-        $faces[] = $i;
-    };
-    
+  //賭けて浮いているチップとそれぞれのチップを作成またはその情報の受けとり
+  if(isset($_POST["Pool_tip"])){ 
+    $Pool_tip = $_POST["Pool_tip"];
+    } else {
+    $Pool_tip = 0;
+  };
 
-$suits = array("h","c");
-    
-foreach($suits as $suit){
-    foreach($faces as $face){
-        $deck[]  = $suit . $face;
-    };
-};
+  if(isset($_POST["Player_tip"])){ 
+    $Player_tip = $_POST["Player_tip"];
+    } else {
+    $Player_tip = 5;
+  };
 
-shuffle($deck);
-
-$Player_hand = [];
-$CPU_hand = [];
-for($i=0;$i<2;$i++){
-    $Player_hand[] = array_shift($deck);
-    $CPU_hand[] = array_shift($deck);
-    $conversion = implode(",", $Player_hand);
-    $conversion = implode(",", $CPU_hand);
-};
-
-
-if($_POST["Pool_tip"] != 0){  
-   $Pool_tip = $_POST["Pool_tip"];
-   } else {
-   $Pool_tip = 0;
-};
-
-if(isset($_POST["Player_tip"])){ 
-   $Player_tip = $_POST["Player_tip"];
-   } else {
-   $Player_tip = 5;
-};
-
-if(isset($_POST["CPU_tip"])){
-   $CPU_tip = $_POST["CPU_tip"];
-   } else {
-   $CPU_tip = 5;
-};
-
-
+  if(isset($_POST["CPU_tip"])){
+    $CPU_tip = $_POST["CPU_tip"];
+    } else {
+    $CPU_tip = 5;
+  };
 ?>
 
 
@@ -75,6 +69,7 @@ if(isset($_POST["CPU_tip"])){
     <br><br>
     <form action="next.php" method="POST">
         <?php
+          //カードが一枚の時はカードを引けない
           if($CPU_tip > 1 && $Player_tip > 1){
             echo '<input type="submit" name="draw" value="カードを引く">';
           }

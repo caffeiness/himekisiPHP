@@ -1,13 +1,11 @@
 <?php 
-  //かけてあるチップの移動ができていない
   $Pool_tip = $_POST["Pool_tip"];
   $CPU_tip = $_POST["CPU_tip"];
   $Player_tip = $_POST["Player_tip"];
   $CPU_result = $_POST["CPU"];
-  $Player_result = $_POST["choice"]; //チェックしてなかった時の処理をどうするか 
+  $Player_result = $_POST["choice"]; //チェックしてなかった時は負ける
   require_once 'function.php';
   require_once 'judgement.php';
-  //echo '<br>CPUのカード:';
   $CPU_num = result_num($CPU_result);
   $Player_num = result_num($Player_result);
 ?>
@@ -46,7 +44,6 @@
             echo '<br><font color="white">あなたの勝ちです！</font>';
           }elseif($Player_tip <= 0){
             echo '<br><font color="white">チップがなくなりました、あなたの負けです。</font>';
-            //続行可能できちゃう
           };
 
         ?><br>
