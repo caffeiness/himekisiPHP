@@ -1,4 +1,5 @@
 <?php 
+  $first = $_POST["winner"];
   $Pool_tip = $_POST["Pool_tip"];
   $CPU_tip = $_POST["CPU_tip"];
   $Player_tip = $_POST["Player_tip"];
@@ -6,8 +7,8 @@
   $Player_hand = $_POST["Player"];
   $deck = $_POST["deck"];
   $Player_hand[] = array_shift($deck);
+  //$conversion = implode(",", $Player_hand);
 
-  //引き分けだった時に浮いたチップの引継ぎ処理
   if(isset($_POST["draw"])){  //勝った回数
    $Pool_tip += 1;
    $Player_tip -= 1;
@@ -64,6 +65,7 @@
         <input type='hidden' name='Pool_tip' value=<?php echo $Pool_tip; ?>>
         <input type='hidden' name='CPU_tip' value=<?php echo $CPU_tip; ?>>
         <input type='hidden' name='Player_tip' value=<?php echo $Player_tip; ?>>
+        <input type='hidden' name='winner' value=<?php echo $first; ?>>
     </form>
   </body>
 </html>
