@@ -2,19 +2,20 @@
   $first = $_POST["winner"];
   $Pool_tip = $_POST["Pool_tip"];
   $CPU_tip = $_POST["CPU_tip"];
+  $CPU_tip_color = $_POST["CPU_tip_color"];
   $Player_tip = $_POST["Player_tip"];
+  $Player_tip_color = $_POST["Player_tip_color"];
   $CPU_hand = $_POST["CPU"];
   $Player_hand = $_POST["Player"];
   $deck = $_POST["deck"];
   $Player_hand[] = array_shift($deck);
-  //$conversion = implode(",", $Player_hand);
 
   if(isset($_POST["draw"])){  //勝った回数
    $Pool_tip += 1;
    $Player_tip -= 1;
    } else {
    $Pool_tip = 0;
-};
+  };
 ?>
 
 
@@ -29,12 +30,17 @@
     <div class="text-center">
     <h1>姫騎士の魂</h1>
     <hr>
-    <img src="images/tipkuro.png" width="100" height="100">
+    <img src="images/<?php echo $CPU_tip_color ?>.png" width="100" height="100">
     <span class="kakomu"><font color="black"><?php echo $CPU_tip ?></font></span>
     <font color="white">相手のカード:</font>
+        <?php
+        if(count($CPU_hand) == 3){
+          echo '<img src="images/z01.png" width="100" height="150">';
+        }
+        ?>
         <img src="images/z01.png" width="100" height="150">
         <img src="images/z01.png" width="100" height="150">
-        <br><img src="images/tipkuro.png" width="100" height="100">
+        <br><img src="images/<?php echo $Player_tip_color ?>.png" width="100" height="100">
         <span class="kakomu"><font color="black"><?php echo $Player_tip ?></font></span>
         <?php
           require_once 'function.php';
@@ -64,7 +70,9 @@
         ?>
         <input type='hidden' name='Pool_tip' value=<?php echo $Pool_tip; ?>>
         <input type='hidden' name='CPU_tip' value=<?php echo $CPU_tip; ?>>
+        <input type='hidden' name='CPU_tip_color' value=<?php echo $CPU_tip_color; ?>>
         <input type='hidden' name='Player_tip' value=<?php echo $Player_tip; ?>>
+        <input type='hidden' name='Player_tip_color' value=<?php echo $Player_tip_color; ?>>
         <input type='hidden' name='winner' value=<?php echo $first; ?>>
     </form>
   </body>

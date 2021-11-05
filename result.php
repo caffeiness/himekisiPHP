@@ -1,20 +1,21 @@
 <?php 
+  require_once 'function.php';
+  require_once 'judgement.php';
   $first = $_POST["winner"];
   $Pool_tip = $_POST["Pool_tip"];
   $CPU_tip = $_POST["CPU_tip"];
+  $CPU_tip_color = $_POST["CPU_tip_color"];
   $Player_tip = $_POST["Player_tip"];
+  $Player_tip_color = $_POST["Player_tip_color"];
   $CPU_result = $_POST["CPU"];
   if(isset($_POST["choice"])){ 
     $Player_result = $_POST["choice"];
+    $Player_num = result_num($Player_result);
   } else {
     $Player_result = array("z01","z01");
+    $Player_num = 0;
   };
-   //チェックしてなかった時の処理をどうするか 
-  require_once 'function.php';
-  require_once 'judgement.php';
-  //echo '<br>CPUのカード:';
   $CPU_num = result_num($CPU_result);
-  $Player_num = result_num($Player_result);
 ?>
 
 <html>
@@ -33,14 +34,14 @@
           $CPU_tip = $tip[0];
           $Player_tip = $tip[1];
           $Pool_tip = $tip[2];
-          echo '<br><img src="images/tipkuro.png" width="100" height="100">';
+          echo '<br><img src="images/'.$CPU_tip_color.'.png" width="100" height="100">';
           echo '<span class="kakomu"><font color="black">'.$CPU_tip.'</font></span>';
           echo '<font color="white">相手のカード:</font>';
           for($i=0;$i<2;$i++){
             outputHandCard($CPU_result[$i]);
           };
           
-          echo '<br><img src="images/tipkuro.png" width="100" height="100">';
+          echo '<br><img src="images/'.$Player_tip_color.'.png" width="100" height="100">';
           echo '<span class="kakomu"><font color="black">'.$Player_tip.'</font></span>';
           echo '<font color="white">あなたのカード:</font>';
           for($i=0;$i<2;$i++){
@@ -72,7 +73,9 @@
         }
       ?>
       <input type="hidden" value=<?php echo $CPU_tip; ?>  name="CPU_tip">
+      <input type="hidden" value=<?php echo $CPU_tip_color; ?>  name="CPU_tip_color">
       <input type="hidden" value=<?php echo $Player_tip; ?> name="Player_tip">
+      <input type="hidden" value=<?php echo $Player_tip_color; ?>  name="Player_tip_color">
       <input type="hidden" value=<?php echo $Pool_tip; ?> name="Pool_tip">
       <input type='hidden' value=<?php echo $first; ?> name='winner' >
     </form>  
@@ -81,14 +84,10 @@
       <input type="submit" value="はじめから？">
       <input type="hidden" value= name="Pool_tip">
       <input type="hidden" value= name="CPU_tip">
+      <input type="hidden" value= name="CPU_tip_color">
       <input type="hidden" value= name="Player_tip">
+      <input type="hidden" value= name="Player_tip_color">
       <input type='hidden' value= name='winner' >
+    </form>
   </body>
 </html>
-
-
-
-
-
-
-

@@ -1,4 +1,6 @@
 <?php
+require_once 'function.php';
+require_once 'judgement.php';
 //先行後行
 if(isset($_POST["winner"])){ 
    $first = $_POST["winner"];
@@ -65,21 +67,49 @@ if(isset($_POST["CPU_tip"])){
     <?php
       if($first == 0){
         echo '<font color="white">あなたは後行です。</font>';
+        //$CPU_hand[] = addCPUCard($CPU_hand,$deck);
+        if(isset($_POST["CPU_tip"])){
+          $CPU_tip_color = $_POST["CPU_tip_color"];
+          $Player_tip_color = $_POST["Player_tip_color"]; 
+        } else {
+          $CPU_tip_color = "tipsiro";
+          $Player_tip_color = "tipkuro";
+        }
+        $CPU_result = result_num($CPU_hand);
+        if($CPU_result < 10){
+          $CPU_hand[] = array_shift($deck);
+        }
+        echo $CPU_hand[0];
+        echo $CPU_hand[1];
+        //echo $CPU_hand[2];
       }else{  
         echo '<font color="white">あなたは先行です。</font>';
+        if(isset($_POST["CPU_tip"])){
+          $CPU_tip_color = $_POST["CPU_tip_color"];
+          $Player_tip_color = $_POST["Player_tip_color"]; 
+        } else {
+          $CPU_tip_color = "tipkuro";
+          $Player_tip_color = "tipsiro";
+        }
       };
     ?>
     <br>
 
-    <img src="images/tipkuro.png" width="100" height="100">
+    <img src="images/<?php echo $CPU_tip_color ?>.png" width="100" height="100">
     <span class="kakomu"><font color="black"><?php echo $CPU_tip ?></font></span>
     <font color="white">相手のカード:</font>
+        <?php
+        if (is_array($CPU_hand)) {
+          if(count($CPU_hand) == 3){
+            echo '<img src="images/z01.png" width="100" height="150">';
+          }
+        };
+        ?>
         <img src="images/z01.png" width="100" height="150">
         <img src="images/z01.png" width="100" height="150">
-        <br><img src="images/tipkuro.png" width="100" height="100">
+        <br><img src="images/<?php echo $Player_tip_color ?>.png" width="100" height="100">
         <span class="kakomu"><font color="black"><?php echo $Player_tip ?></font></span>
         <?php
-          require_once 'function.php';
           echo '<font color="white">あなたのカード:</font>';
           for($i=0;$i<count($Player_hand);$i++){
             outputHandCard($Player_hand[$i]);
@@ -93,9 +123,11 @@ if(isset($_POST["CPU_tip"])){
           }
         ?>
         <?php 
-        for($i=0; $i < count($CPU_hand); $i++) {
+        if (is_array($CPU_hand)) {
+          for($i=0; $i < count($CPU_hand); $i++) {
             echo "<input type='hidden' name='CPU[]' value=" . $CPU_hand[$i] . ">";
-        }
+          }
+        };
         ?>
         <?php 
         for($i=0; $i < count($Player_hand); $i++) {
@@ -104,7 +136,9 @@ if(isset($_POST["CPU_tip"])){
         ?>
         <input type='hidden' name='Pool_tip' value=<?php echo $Pool_tip; ?>>
         <input type='hidden' name='CPU_tip' value=<?php echo $CPU_tip; ?>>
+        <input type='hidden' name='CPU_tip_color' value=<?php echo $CPU_tip_color; ?>>
         <input type='hidden' name='Player_tip' value=<?php echo $Player_tip; ?>>
+        <input type='hidden' name='Player_tip_color' value=<?php echo $Player_tip_color; ?>>
         <input type='hidden' name='winner' value=<?php echo $first; ?>>
         <?php 
         for($i=0; $i < count($deck); $i++) {
@@ -121,9 +155,11 @@ if(isset($_POST["CPU_tip"])){
         ?>
         <input type="submit" value="勝負">
         <?php 
-        for($i=0; $i < count($CPU_hand); $i++) {
+        if (is_array($CPU_hand)) {
+          for($i=0; $i < count($CPU_hand); $i++) {
             echo "<input type='hidden' name='CPU[]' value=" . $CPU_hand[$i] . ">";
-        }
+          }
+        };
         ?>
         <?php 
         for($i=0; $i < count($Player_hand); $i++) {
@@ -132,7 +168,9 @@ if(isset($_POST["CPU_tip"])){
         ?>
         <input type='hidden' name='Pool_tip' value=<?php echo $Pool_tip; ?>>
         <input type='hidden' name='CPU_tip' value=<?php echo $CPU_tip; ?>>
+        <input type='hidden' name='CPU_tip_color' value=<?php echo $CPU_tip_color; ?>>
         <input type='hidden' name='Player_tip' value=<?php echo $Player_tip; ?>>
+        <input type='hidden' name='Player_tip_color' value=<?php echo $Player_tip_color; ?>>
         <input type='hidden' name='winner' value=<?php echo $first; ?>>
     </form>
   </body>
