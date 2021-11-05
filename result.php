@@ -10,11 +10,14 @@
   $CPU_result = $_POST["CPU"];
   if(isset($_POST["choice"])){ 
     $Player_result = $_POST["choice"];
+    $Player_tip_result = result_tip($Player_result,$Player_tip_color);
     $Player_num = result_num($Player_result);
   } else {
     $Player_result = array("z01","z01");
+    $Player_tip_result = result_tip($Player_result,$Player_tip_color);
     $Player_num = 0;
   };
+  $CPU_tip_result = result_tip($CPU_result,$CPU_tip_color);
   $CPU_num = result_num($CPU_result);
 ?>
 
@@ -30,10 +33,12 @@
     <h1>姫騎士の魂</h1>
     <hr>
         <?php
-          $tip = WinorLose($CPU_num,$Player_num,$Pool_tip,$CPU_tip,$Player_tip);
+          echo $Pool_tip;
+          $tip = WinorLose($CPU_num,$Player_num,$Pool_tip,$CPU_tip,$Player_tip,$CPU_tip_result,$Player_tip_result);
           $CPU_tip = $tip[0];
           $Player_tip = $tip[1];
           $Pool_tip = $tip[2];
+
           echo '<br><img src="images/'.$CPU_tip_color.'.png" width="100" height="100">';
           echo '<span class="kakomu"><font color="black">'.$CPU_tip.'</font></span>';
           echo '<font color="white">相手のカード:</font>';
@@ -52,7 +57,6 @@
             echo '<br><font color="white">あなたの勝ちです！</font>';
           }elseif($Player_tip <= 0){
             echo '<br><font color="white">チップがなくなりました、あなたの負けです。</font>';
-            //続行可能できちゃう
           };
 
           //勝った場合先行になるのでその処理

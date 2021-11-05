@@ -13,9 +13,7 @@
   if(isset($_POST["draw"])){  //勝った回数
    $Pool_tip += 1;
    $Player_tip -= 1;
-   } else {
-   $Pool_tip = 0;
-  };
+   };
 ?>
 
 

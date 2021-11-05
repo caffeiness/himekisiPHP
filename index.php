@@ -1,6 +1,5 @@
 <?php
 require_once 'function.php';
-require_once 'judgement.php';
 //先行後行
 if(isset($_POST["winner"])){ 
    $first = $_POST["winner"];
@@ -39,13 +38,13 @@ if(isset($_POST["Pool_tip"])){
 if(isset($_POST["Player_tip"])){ 
    $Player_tip = $_POST["Player_tip"];
    } else {
-   $Player_tip = 5;
+   $Player_tip = 10;
 };
 
 if(isset($_POST["CPU_tip"])){
    $CPU_tip = $_POST["CPU_tip"];
    } else {
-   $CPU_tip = 5;
+   $CPU_tip = 10;
 };
 
 
@@ -78,6 +77,8 @@ if(isset($_POST["CPU_tip"])){
         $CPU_result = result_num($CPU_hand);
         if($CPU_result < 10){
           $CPU_hand[] = array_shift($deck);
+          $Pool_tip += 1;
+          $CPU_tip -= 1;
         }
         echo $CPU_hand[0];
         echo $CPU_hand[1];
