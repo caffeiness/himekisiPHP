@@ -75,14 +75,13 @@ if(isset($_POST["CPU_tip"])){
           $Player_tip_color = "tipkuro";
         }
         $CPU_result = result_num($CPU_hand);
+        //CPUのカード引くかどうかの処理c
         if($CPU_result < 10){
           $CPU_hand[] = array_shift($deck);
+          //var_dump($CPU_hand);
           $Pool_tip += 1;
           $CPU_tip -= 1;
         }
-        echo $CPU_hand[0];
-        echo $CPU_hand[1];
-        //echo $CPU_hand[2];
       }else{  
         echo '<font color="white">あなたは先行です。</font>';
         if(isset($_POST["CPU_tip"])){
@@ -103,6 +102,7 @@ if(isset($_POST["CPU_tip"])){
         if (is_array($CPU_hand)) {
           if(count($CPU_hand) == 3){
             echo '<img src="images/z01.png" width="100" height="150">';
+            $CPU_hand = choiceCPUCard($CPU_hand);
           }
         };
         ?>

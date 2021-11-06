@@ -14,4 +14,26 @@
       }
       return array($CPU_hand,$CPU_tip);
     }
+    
+    function choiceCPUCard($CPU_hand){
+      if (is_array($CPU_hand)) {
+          for($i=0; $i < count($CPU_hand); $i++) {
+              $suit[] = $CPU_hand[$i][0];
+              if($suit[$i] == "c"){
+                  $CPU_hand_c[] = $CPU_hand[$i];
+              }else{
+                  $CPU_hand_h[] = $CPU_hand[$i];   
+              }
+          }
+
+      };
+      
+      if (is_array($CPU_hand_h)) {
+          if(count($CPU_hand_h) == 2){
+              return $CPU_hand_h;
+          }else{
+              return $CPU_hand_c;
+          }
+      }   
+  };
 ?>
