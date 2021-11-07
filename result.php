@@ -7,7 +7,7 @@
   $CPU_tip_color = $_POST["CPU_tip_color"];
   $Player_tip = $_POST["Player_tip"];
   $Player_tip_color = $_POST["Player_tip_color"];
-  $CPU_result = $_POST["CPU"];
+  $CPU_result = choiceCPUCard($_POST["CPU"]);
   if(isset($_POST["choice"])){ 
     $Player_result = $_POST["choice"];
     $Player_tip_result = result_tip($Player_result,$Player_tip_color);

@@ -28,10 +28,13 @@
 
       };
       
-      if (is_array($CPU_hand_h)) {
+      if (isset($CPU_hand_h)) {
           if(count($CPU_hand_h) == 2){
               return $CPU_hand_h;
-          }else{
+          }
+      }
+      if (isset($CPU_hand_c)) {
+          if(count($CPU_hand_c) == 2){
               return $CPU_hand_c;
           }
       }   
