@@ -1,5 +1,7 @@
 <?php
 require_once 'function.php';
+$level = filter_input(INPUT_POST, 'level');
+//$level = $_POST["level"];
 //先行後行
 if(isset($_POST["winner"])){ 
    $first = $_POST["winner"];
@@ -64,6 +66,7 @@ if(isset($_POST["CPU_tip"])){
     <hr>
     
     <?php
+    echo $level;
       if($first == 0){
         echo '<font color="white">あなたは後行です。</font>';
         //$CPU_hand[] = addCPUCard($CPU_hand,$deck);
@@ -78,7 +81,7 @@ if(isset($_POST["CPU_tip"])){
         //CPUのカード引くかどうかの処理c
         if($CPU_tip > 1 && $CPU_result < 10){
           $CPU_hand[] = array_shift($deck);
-          //var_dump($CPU_hand);
+          var_dump($CPU_hand);
           $Pool_tip += 1;
           $CPU_tip -= 1;
         }
@@ -146,6 +149,7 @@ if(isset($_POST["CPU_tip"])){
             echo "<input type='hidden' name='deck[]' value=".$deck[$i].">";
         }
         ?>
+        <input type='hidden' name='level' value=<?php echo $level; ?>>
     </form>
     <form action="result.php" method="POST">
         <?php 
@@ -178,6 +182,7 @@ if(isset($_POST["CPU_tip"])){
             echo "<input type='hidden' name='deck[]' value=".$deck[$i].">";
         }
         ?>
+        <input type='hidden' name='level' value=<?php echo $level; ?>>
     </form>
   </body>
 </html>

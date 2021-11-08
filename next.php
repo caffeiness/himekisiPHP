@@ -1,6 +1,7 @@
 <?php 
   require_once 'function.php';
   $first = $_POST["winner"];
+  $level = filter_input(INPUT_POST, 'level');
   $Pool_tip = $_POST["Pool_tip"];
   $CPU_tip = $_POST["CPU_tip"];
   $CPU_tip_color = $_POST["CPU_tip_color"];
@@ -91,6 +92,7 @@
             echo "<input type='hidden' name='deck[]' value=".$deck[$i].">";
         }
         ?>
+        <input type='hidden' name='winner' value=<?php echo $level; ?>>
     </form>
   </body>
 </html>

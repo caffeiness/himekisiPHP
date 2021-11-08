@@ -29,5 +29,20 @@
               return $CPU_hand_c;
           }
       }   
-  };
+    };
+    
+  function CPU_result_num($number) {
+    $CPU_result_1 = result_num($number);
+    $CPU_result_2 = result_num(array_slice($number, 1));
+    $number_result = $number;
+    array_splice($number,1,1);
+    $CPU_result_3 = result_num($number);
+    
+    if($CPU_result_1 <= $CPU_result_2 && $CPU_result_3 <= $CPU_result_2){
+        $number_result = array_slice($number_result, 1); 
+    }elseif($CPU_result_1 <= $CPU_result_3 && $CPU_result_2 <= $CPU_result_3){
+        $number_result = $number;
+    }
+    return $number_result;
+};
 ?>

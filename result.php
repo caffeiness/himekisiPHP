@@ -2,6 +2,7 @@
   require_once 'function.php';
   require_once 'judgement.php';
   $first = $_POST["winner"];
+  $level = filter_input(INPUT_POST, 'level');
   $deck = $_POST["deck"];
   $Pool_tip = $_POST["Pool_tip"];
   $CPU_tip = $_POST["CPU_tip"];
@@ -10,7 +11,7 @@
   $Player_tip_color = $_POST["Player_tip_color"];
   $CPU_result = $_POST["CPU"];
   //var_dump($deck);
-  if($first != 0){
+  if($first != 0 && count($CPU_result) == 2){
     $CPU_num = result_num($CPU_result);
     if($CPU_tip > 1 && $CPU_num < 10){
       $CPU_result[] = array_shift($deck);
@@ -19,8 +20,13 @@
       }
   };
   //var_dump($CPU_result);
+  //var_dump($CPU_result);
   if(count($CPU_result) > 2){
+    if($level == "hard"){
+      $CPU_result = CPU_result_num($CPU_result);
+    }else{
       $CPU_result = choiceCPUCard($CPU_result);
+    }
   };
 
   if(isset($_POST["choice"])){ 
@@ -50,7 +56,7 @@
     <h1>姫騎士の魂</h1>
     <hr>
         <?php
-          echo $Pool_tip;
+          echo $level;
           $tip = WinorLose($CPU_num,$Player_num,$Pool_tip,$CPU_tip,$Player_tip,$CPU_tip_result,$Player_tip_result);
           $CPU_tip = $tip[0];
           $Player_tip = $tip[1];
@@ -101,9 +107,10 @@
       <input type="hidden" value=<?php echo $Player_tip_color; ?>  name="Player_tip_color">
       <input type="hidden" value=<?php echo $Pool_tip; ?> name="Pool_tip">
       <input type='hidden' value=<?php echo $first; ?> name='winner' >
+      <input type='hidden' name='level' value=<?php echo $level; ?>>
     </form>  
 
-    <form action="index.php" method="POST">
+    <form action="firstpage.php" method="POST">
       <input type="submit" value="はじめから？">
       <input type="hidden" value= name="Pool_tip">
       <input type="hidden" value= name="CPU_tip">
