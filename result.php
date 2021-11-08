@@ -2,12 +2,27 @@
   require_once 'function.php';
   require_once 'judgement.php';
   $first = $_POST["winner"];
+  $deck = $_POST["deck"];
   $Pool_tip = $_POST["Pool_tip"];
   $CPU_tip = $_POST["CPU_tip"];
   $CPU_tip_color = $_POST["CPU_tip_color"];
   $Player_tip = $_POST["Player_tip"];
   $Player_tip_color = $_POST["Player_tip_color"];
-  $CPU_result = choiceCPUCard($_POST["CPU"]);
+  $CPU_result = $_POST["CPU"];
+  //var_dump($deck);
+  if($first != 0){
+    $CPU_num = result_num($CPU_result);
+    if($CPU_tip > 1 && $CPU_num < 10){
+      $CPU_result[] = array_shift($deck);
+      $Pool_tip += 1;
+      $CPU_tip -= 1;
+      }
+  };
+  //var_dump($CPU_result);
+  if(count($CPU_result) > 2){
+      $CPU_result = choiceCPUCard($CPU_result);
+  };
+
   if(isset($_POST["choice"])){ 
     $Player_result = $_POST["choice"];
     $Player_tip_result = result_tip($Player_result,$Player_tip_color);
@@ -19,6 +34,8 @@
   };
   $CPU_tip_result = result_tip($CPU_result,$CPU_tip_color);
   $CPU_num = result_num($CPU_result);
+  //先行で勝負した時、CPU引くかどうか
+  
 ?>
 
 <html>
@@ -53,7 +70,9 @@
             outputHandCard($Player_result[$i]);
           };
           echo '<br>';
-          if($CPU_tip <= 0){
+          if($CPU_tip == 0 && $Player_tip == 0){
+            echo '<br><font color="white">引き分けです</font>';
+          }elseif($CPU_tip <= 0){
             echo '<br><font color="white">あなたの勝ちです！</font>';
           }elseif($Player_tip <= 0){
             echo '<br><font color="white">チップがなくなりました、あなたの負けです。</font>';

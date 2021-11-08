@@ -5,15 +5,6 @@
         $img1 = $img . ".png";
         echo "<img src=" . $img1 . " width=100 height=150>";
     };
-
-    function  addCPUCard($CPU_hand,$deck,$CPU_tip){
-      $CPU_result = result_num($CPU_hand);
-      if($CPU_result < 10){
-        $CPU_hand = array_shift($deck);
-        $CPU_tip -= 1;
-      }
-      return array($CPU_hand,$CPU_tip);
-    }
     
     function choiceCPUCard($CPU_hand){
       if (is_array($CPU_hand)) {
@@ -29,12 +20,12 @@
       };
       
       if (isset($CPU_hand_h)) {
-          if(count($CPU_hand_h) == 2){
+          if(count($CPU_hand_h) >= 2){
               return $CPU_hand_h;
           }
       }
       if (isset($CPU_hand_c)) {
-          if(count($CPU_hand_c) == 2){
+          if(count($CPU_hand_c) >= 2){
               return $CPU_hand_c;
           }
       }   

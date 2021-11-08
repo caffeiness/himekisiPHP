@@ -38,7 +38,7 @@
         }
         else{
           $CPU_result = result_num($CPU_hand);
-          if($CPU_result < 10){
+          if($CPU_tip > 1 && $CPU_result < 10){
             $CPU_hand[] = array_shift($deck);
             var_dump($CPU_hand);
             $Pool_tip += 1;
@@ -85,6 +85,12 @@
         <input type='hidden' name='Player_tip' value=<?php echo $Player_tip; ?>>
         <input type='hidden' name='Player_tip_color' value=<?php echo $Player_tip_color; ?>>
         <input type='hidden' name='winner' value=<?php echo $first; ?>>
+        <?php 
+        //この画面からいくとdeckがないためエラー出る
+        for($i=0; $i < count($deck); $i++) {
+            echo "<input type='hidden' name='deck[]' value=".$deck[$i].">";
+        }
+        ?>
     </form>
   </body>
 </html>

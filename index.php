@@ -76,9 +76,9 @@ if(isset($_POST["CPU_tip"])){
         }
         $CPU_result = result_num($CPU_hand);
         //CPUのカード引くかどうかの処理c
-        if($CPU_result < 10){
+        if($CPU_tip > 1 && $CPU_result < 10){
           $CPU_hand[] = array_shift($deck);
-          var_dump($CPU_hand);
+          //var_dump($CPU_hand);
           $Pool_tip += 1;
           $CPU_tip -= 1;
         }
@@ -92,6 +92,7 @@ if(isset($_POST["CPU_tip"])){
           $Player_tip_color = "tipsiro";
         }
       };
+      //var_dump($CPU_hand);
     ?>
     <br>
 
@@ -118,7 +119,7 @@ if(isset($_POST["CPU_tip"])){
     <br><br>
     <form action="next.php" method="POST">
         <?php
-          if($CPU_tip > 1 && $Player_tip > 1){
+          if($Player_tip > 1){
             echo '<input type="submit" name="draw" value="カードを引く">';
           }
         ?>
@@ -172,6 +173,11 @@ if(isset($_POST["CPU_tip"])){
         <input type='hidden' name='Player_tip' value=<?php echo $Player_tip; ?>>
         <input type='hidden' name='Player_tip_color' value=<?php echo $Player_tip_color; ?>>
         <input type='hidden' name='winner' value=<?php echo $first; ?>>
+        <?php 
+        for($i=0; $i < count($deck); $i++) {
+            echo "<input type='hidden' name='deck[]' value=".$deck[$i].">";
+        }
+        ?>
     </form>
   </body>
 </html>
