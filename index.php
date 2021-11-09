@@ -58,7 +58,7 @@ if(isset($_POST["CPU_tip"])){
   <meta http-equiv="Content-Type" content="text/html; charset=utf8">
   <meta name = "viewport" content = "width=device-width, intial-scale = 1.0">
   <title>姫騎士の魂</title>
-  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="css/index.css">
 </head>
   <body>
     <div class="text-center">
@@ -78,7 +78,8 @@ if(isset($_POST["CPU_tip"])){
           $Player_tip_color = "tipkuro";
         }
         $CPU_result = result_num($CPU_hand);
-        //CPUのカード引くかどうかの処理c
+        //CPUのカード引くかどうかの処理
+
         if($CPU_tip > 1 && $CPU_result < 10){
           $CPU_hand[] = array_shift($deck);
           var_dump($CPU_hand);

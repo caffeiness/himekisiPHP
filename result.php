@@ -19,9 +19,9 @@
       $CPU_tip -= 1;
       }
   };
-  //var_dump($CPU_result);
-  //var_dump($CPU_result);
+  
   if(count($CPU_result) > 2){
+    echo $level;
     if($level == "hard"){
       $CPU_result = CPU_result_num($CPU_result);
     }else{
@@ -49,7 +49,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf8">
   <meta name = "viewport" content = "width=device-width, intial-scale = 1.0">
   <title>姫騎士の魂</title>
-  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
     <div class="text-center">

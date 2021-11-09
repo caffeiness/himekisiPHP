@@ -24,7 +24,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf8">
   <meta name = "viewport" content = "width=device-width, intial-scale = 1.0">
   <title>姫騎士の魂</title>
-  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="css/index.css">
 </head>
   <body>
     <div class="text-center">
@@ -92,7 +92,7 @@
             echo "<input type='hidden' name='deck[]' value=".$deck[$i].">";
         }
         ?>
-        <input type='hidden' name='winner' value=<?php echo $level; ?>>
+        <input type='hidden' name='level' value=<?php echo $level; ?>>
     </form>
   </body>
 </html>
