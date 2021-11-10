@@ -10,7 +10,8 @@
   $Player_tip = $_POST["Player_tip"];
   $Player_tip_color = $_POST["Player_tip_color"];
   $CPU_result = $_POST["CPU"];
-  //var_dump($deck);
+
+  //CPUが後攻で手札を引かなかった時の処理
   if($first != 0 && count($CPU_result) == 2){
     $CPU_num = result_num($CPU_result);
     if($CPU_tip > 1 && $CPU_num < 10){
@@ -20,8 +21,8 @@
       }
   };
   
+  //難易度選択によって手札を選ぶ関数を変える
   if(count($CPU_result) > 2){
-    echo $level;
     if($level == "hard"){
       $CPU_result = CPU_result_num($CPU_result);
     }else{
@@ -29,6 +30,10 @@
     }
   };
 
+  $CPU_tip_result = result_tip($CPU_result,$CPU_tip_color);
+  $CPU_num = result_num($CPU_result);
+
+  //手札選択されてない時の処理も追加
   if(isset($_POST["choice"])){ 
     $Player_result = $_POST["choice"];
     $Player_tip_result = result_tip($Player_result,$Player_tip_color);
@@ -37,11 +42,7 @@
     $Player_result = array("z01","z01");
     $Player_tip_result = result_tip($Player_result,$Player_tip_color);
     $Player_num = 0;
-  };
-  $CPU_tip_result = result_tip($CPU_result,$CPU_tip_color);
-  $CPU_num = result_num($CPU_result);
-  //先行で勝負した時、CPU引くかどうか
-  
+  };  
 ?>
 
 <html>
@@ -56,7 +57,6 @@
     <h1>姫騎士の魂</h1>
     <hr>
         <?php
-          echo $level;
           $tip = WinorLose($CPU_num,$Player_num,$Pool_tip,$CPU_tip,$Player_tip,$CPU_tip_result,$Player_tip_result);
           $CPU_tip = $tip[0];
           $Player_tip = $tip[1];
@@ -76,6 +76,7 @@
             outputHandCard($Player_result[$i]);
           };
           echo '<br>';
+          //全体的な勝敗
           if($CPU_tip == 0 && $Player_tip == 0){
             echo '<br><font color="white">引き分けです</font>';
           }elseif($CPU_tip <= 0){
@@ -84,40 +85,41 @@
             echo '<br><font color="white">チップがなくなりました、あなたの負けです。</font>';
           };
 
-          //勝った場合先行になるのでその処理
+          //勝った場合先行になるのでその処理、引き分けはランダム
           if($CPU_num == $Player_num){
             $first = rand() % 2;
           }elseif($CPU_num > $Player_num){
             $first = 0;
           }else{
             $first = 1;
-          }
+          };
 
-        ?><br>
-        <br>
+        ?>
+        <p>
     <form action="index.php" method="POST">
       <?php
+        //互いにチップがあるときのみ表示
         if($CPU_tip > 0 && $Player_tip > 0){
           echo '<input type="submit" value="もう一度やる？">';
         }
       ?>
-      <input type="hidden" value=<?php echo $CPU_tip; ?>  name="CPU_tip">
-      <input type="hidden" value=<?php echo $CPU_tip_color; ?>  name="CPU_tip_color">
-      <input type="hidden" value=<?php echo $Player_tip; ?> name="Player_tip">
-      <input type="hidden" value=<?php echo $Player_tip_color; ?>  name="Player_tip_color">
-      <input type="hidden" value=<?php echo $Pool_tip; ?> name="Pool_tip">
-      <input type='hidden' value=<?php echo $first; ?> name='winner' >
+      <input type='hidden' name='Pool_tip' value=<?php echo $Pool_tip; ?>>        
+      <input type='hidden' name='CPU_tip' value=<?php echo $CPU_tip; ?>>
+      <input type='hidden' name='CPU_tip_color' value=<?php echo $CPU_tip_color; ?>>
+      <input type='hidden' name='Player_tip' value=<?php echo $Player_tip; ?>>
+      <input type='hidden' name='Player_tip_color' value=<?php echo $Player_tip_color; ?>>
+      <input type='hidden' name='winner' value=<?php echo $first; ?>>
       <input type='hidden' name='level' value=<?php echo $level; ?>>
     </form>  
 
     <form action="firstpage.php" method="POST">
       <input type="submit" value="はじめから？">
-      <input type="hidden" value= name="Pool_tip">
-      <input type="hidden" value= name="CPU_tip">
-      <input type="hidden" value= name="CPU_tip_color">
-      <input type="hidden" value= name="Player_tip">
-      <input type="hidden" value= name="Player_tip_color">
-      <input type='hidden' value= name='winner' >
+      <input type="hidden" name="Pool_tip"　value= >
+      <input type="hidden" name="CPU_tip"　value= >
+      <input type="hidden" name="CPU_tip_color"　value= >
+      <input type="hidden" name="Player_tip"value= >
+      <input type="hidden" name="Player_tip_color"　value= >
+      <input type='hidden' name='winner' value= >
     </form>
   </body>
 </html>

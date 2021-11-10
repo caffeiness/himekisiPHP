@@ -1,55 +1,49 @@
 <?php
-require_once 'function.php';
-$level = filter_input(INPUT_POST, 'level');
-//$level = $_POST["level"];
-//先行後行
-if(isset($_POST["winner"])){ 
-   $first = $_POST["winner"];
-   } else {
-   $first = rand() % 2;
-};
+  require_once 'function.php';
+  $level = filter_input(INPUT_POST, 'level');
+  //先攻後攻を決める
+  if(isset($_POST["winner"])){ 
+    $first = $_POST["winner"];
+    } else {
+    $first = rand() % 2;
+  };
 
-for($i = 1;$i <= 13;$i++){
-        $faces[] = $i;
-    };
-    
+  //山札を作って配る
+  for($i = 1;$i <= 13;$i++){
+          $faces[] = $i;
+      };
+  $suits = array("h","c");
+  foreach($suits as $suit){
+      foreach($faces as $face){
+          $deck[]  = $suit . $face;
+      };
+  };
+  shuffle($deck);
+  $Player_hand = [];
+  $CPU_hand = [];
+  for($i=0;$i<2;$i++){
+      $Player_hand[] = array_shift($deck);
+      $CPU_hand[] = array_shift($deck);
+  };
 
-$suits = array("h","c");
-    
-foreach($suits as $suit){
-    foreach($faces as $face){
-        $deck[]  = $suit . $face;
-    };
-};
+  //チップを配る。
+  if(isset($_POST["Pool_tip"])){ 
+    $Pool_tip = $_POST["Pool_tip"];
+    } else {
+    $Pool_tip = 0;
+  };
 
-shuffle($deck);
+  if(isset($_POST["Player_tip"])){ 
+    $Player_tip = $_POST["Player_tip"];
+    } else {
+    $Player_tip = 10;
+  };
 
-$Player_hand = [];
-$CPU_hand = [];
-for($i=0;$i<2;$i++){
-    $Player_hand[] = array_shift($deck);
-    $CPU_hand[] = array_shift($deck);
-};
-
-if(isset($_POST["Pool_tip"])){ 
-   $Pool_tip = $_POST["Pool_tip"];
-   } else {
-   $Pool_tip = 0;
-};
-
-if(isset($_POST["Player_tip"])){ 
-   $Player_tip = $_POST["Player_tip"];
-   } else {
-   $Player_tip = 10;
-};
-
-if(isset($_POST["CPU_tip"])){
-   $CPU_tip = $_POST["CPU_tip"];
-   } else {
-   $CPU_tip = 10;
-};
-
-
+  if(isset($_POST["CPU_tip"])){
+    $CPU_tip = $_POST["CPU_tip"];
+    } else {
+    $CPU_tip = 10;
+  };
 ?>
 
 
@@ -66,10 +60,8 @@ if(isset($_POST["CPU_tip"])){
     <hr>
     
     <?php
-    echo $level;
       if($first == 0){
         echo '<font color="white">あなたは後行です。</font>';
-        //$CPU_hand[] = addCPUCard($CPU_hand,$deck);
         if(isset($_POST["CPU_tip"])){
           $CPU_tip_color = $_POST["CPU_tip_color"];
           $Player_tip_color = $_POST["Player_tip_color"]; 
@@ -77,9 +69,8 @@ if(isset($_POST["CPU_tip"])){
           $CPU_tip_color = "tipsiro";
           $Player_tip_color = "tipkuro";
         }
-        $CPU_result = result_num($CPU_hand);
         //CPUのカード引くかどうかの処理
-
+        $CPU_result = result_num($CPU_hand);
         if($CPU_tip > 1 && $CPU_result < 10){
           $CPU_hand[] = array_shift($deck);
           var_dump($CPU_hand);
@@ -96,7 +87,6 @@ if(isset($_POST["CPU_tip"])){
           $Player_tip_color = "tipsiro";
         }
       };
-      //var_dump($CPU_hand);
     ?>
     <br>
 
@@ -104,11 +94,9 @@ if(isset($_POST["CPU_tip"])){
     <span class="kakomu"><font color="black"><?php echo $CPU_tip ?></font></span>
     <font color="white">相手のカード:</font>
         <?php
-        if (is_array($CPU_hand)) {
           if(count($CPU_hand) == 3){
             echo '<img src="images/z01.png" width="100" height="150">';
-          }
-        };
+          };
         ?>
         <img src="images/z01.png" width="100" height="150">
         <img src="images/z01.png" width="100" height="150">
@@ -128,16 +116,14 @@ if(isset($_POST["CPU_tip"])){
           }
         ?>
         <?php 
-        if (is_array($CPU_hand)) {
           for($i=0; $i < count($CPU_hand); $i++) {
             echo "<input type='hidden' name='CPU[]' value=" . $CPU_hand[$i] . ">";
-          }
-        };
+          };
         ?>
         <?php 
-        for($i=0; $i < count($Player_hand); $i++) {
-            echo "<input type='hidden' name='Player[]' value=" . $Player_hand[$i] . ">";
-        }
+          for($i=0; $i < count($Player_hand); $i++) {
+              echo "<input type='hidden' name='Player[]' value=" . $Player_hand[$i] . ">";
+          }
         ?>
         <input type='hidden' name='Pool_tip' value=<?php echo $Pool_tip; ?>>
         <input type='hidden' name='CPU_tip' value=<?php echo $CPU_tip; ?>>
@@ -146,31 +132,29 @@ if(isset($_POST["CPU_tip"])){
         <input type='hidden' name='Player_tip_color' value=<?php echo $Player_tip_color; ?>>
         <input type='hidden' name='winner' value=<?php echo $first; ?>>
         <?php 
-        for($i=0; $i < count($deck); $i++) {
-            echo "<input type='hidden' name='deck[]' value=".$deck[$i].">";
-        }
+          for($i=0; $i < count($deck); $i++) {
+              echo "<input type='hidden' name='deck[]' value=".$deck[$i].">";
+          }
         ?>
         <input type='hidden' name='level' value=<?php echo $level; ?>>
     </form>
     <form action="result.php" method="POST">
         <?php 
-        for($i=0; $i < count($Player_hand); $i++) {
-            echo "<input type='checkbox' name='choice[]' value=".$Player_hand[$i].">";
-            echo '<font color="white">'.$Player_hand[$i].'</font>';
-        }
+          for($i=0; $i < count($Player_hand); $i++) {
+              echo "<input type='checkbox' name='choice[]' value=".$Player_hand[$i].">";
+              echo '<font color="white">'.$Player_hand[$i].'</font>';
+          }
         ?>
         <input type="submit" value="勝負">
         <?php 
-        if (is_array($CPU_hand)) {
           for($i=0; $i < count($CPU_hand); $i++) {
             echo "<input type='hidden' name='CPU[]' value=" . $CPU_hand[$i] . ">";
-          }
-        };
+          };
         ?>
         <?php 
-        for($i=0; $i < count($Player_hand); $i++) {
-            echo "<input type='hidden' name='Player[]' value=" . $Player_hand[$i] . ">";
-        }
+          for($i=0; $i < count($Player_hand); $i++) {
+              echo "<input type='hidden' name='Player[]' value=" . $Player_hand[$i] . ">";
+          }
         ?>
         <input type='hidden' name='Pool_tip' value=<?php echo $Pool_tip; ?>>
         <input type='hidden' name='CPU_tip' value=<?php echo $CPU_tip; ?>>
@@ -179,9 +163,9 @@ if(isset($_POST["CPU_tip"])){
         <input type='hidden' name='Player_tip_color' value=<?php echo $Player_tip_color; ?>>
         <input type='hidden' name='winner' value=<?php echo $first; ?>>
         <?php 
-        for($i=0; $i < count($deck); $i++) {
-            echo "<input type='hidden' name='deck[]' value=".$deck[$i].">";
-        }
+          for($i=0; $i < count($deck); $i++) {
+              echo "<input type='hidden' name='deck[]' value=".$deck[$i].">";
+          }
         ?>
         <input type='hidden' name='level' value=<?php echo $level; ?>>
     </form>

@@ -12,7 +12,8 @@
   $deck = $_POST["deck"];
   $Player_hand[] = array_shift($deck);
 
-  if(isset($_POST["draw"])){  //勝った回数
+  //カードを引いたらチップを減らす
+  if(isset($_POST["draw"])){
    $Pool_tip += 1;
    $Player_tip -= 1;
    };
@@ -34,34 +35,31 @@
     <span class="kakomu"><font color="black"><?php echo $CPU_tip ?></font></span>
     <font color="white">相手のカード:</font>
         <?php
-        if(count($CPU_hand) == 3){
-          echo '<img src="images/z01.png" width="100" height="150">';
-        }
-        else{
-          $CPU_result = result_num($CPU_hand);
-          if($CPU_tip > 1 && $CPU_result < 10){
-            $CPU_hand[] = array_shift($deck);
-            var_dump($CPU_hand);
-            $Pool_tip += 1;
-            $CPU_tip -= 1;
+          //CPUが後攻で引くかどうか
+          if(count($CPU_hand) == 2 && $first == 1){
+            $CPU_result = result_num($CPU_hand);
+            if($CPU_tip > 1 && $CPU_result < 10){
+              $CPU_hand[] = array_shift($deck);
+              var_dump($CPU_hand);
+              $Pool_tip += 1;
+              $CPU_tip -= 1;
+            }
           }
           if(count($CPU_hand) == 3){
-            echo '<img src="images/z01.png" width="100" height="150">';
+              echo '<img src="images/z01.png" width="100" height="150">';
           }
-        }
         ?>
         <img src="images/z01.png" width="100" height="150">
         <img src="images/z01.png" width="100" height="150">
         <br><img src="images/<?php echo $Player_tip_color ?>.png" width="100" height="100">
         <span class="kakomu"><font color="black"><?php echo $Player_tip ?></font></span>
         <?php
-          require_once 'function.php';
           echo '<font color="white">あなたのカード:</font>';
           for($i=0;$i<count($Player_hand);$i++){
             outputHandCard($Player_hand[$i]);
           };
         ?>  
-    <br><br>
+        <p>
     <form action="result.php" method="POST">
         <?php 
         for($i=0; $i < count($Player_hand); $i++) {
@@ -87,7 +85,6 @@
         <input type='hidden' name='Player_tip_color' value=<?php echo $Player_tip_color; ?>>
         <input type='hidden' name='winner' value=<?php echo $first; ?>>
         <?php 
-        //この画面からいくとdeckがないためエラー出る
         for($i=0; $i < count($deck); $i++) {
             echo "<input type='hidden' name='deck[]' value=".$deck[$i].">";
         }
