@@ -34,15 +34,15 @@
   $CPU_num = result_num($CPU_result);
 
   //手札選択されてない時の処理も追加
-  if(isset($_POST["choice"])){ 
+  if(isset($_POST["choice"]) && count($_POST["choice"]) == 2){
     $Player_result = $_POST["choice"];
     $Player_tip_result = result_tip($Player_result,$Player_tip_color);
     $Player_num = result_num($Player_result);
-  } else {
+  }else {
     $Player_result = array("z01","z01");
     $Player_tip_result = result_tip($Player_result,$Player_tip_color);
     $Player_num = 0;
-  };  
+  };
 ?>
 
 <html>
