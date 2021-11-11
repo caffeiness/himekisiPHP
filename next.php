@@ -17,6 +17,16 @@
    $Pool_tip += 1;
    $Player_tip -= 1;
    };
+
+  //CPUが後攻で引くかどうか
+  if(count($CPU_hand) == 2 && $first == 1){
+    $CPU_result = result_num($CPU_hand);
+    if($CPU_tip > 1 && $CPU_result < 10){
+      $CPU_hand[] = array_shift($deck);
+      $Pool_tip += 1;
+      $CPU_tip -= 1;
+    }
+  };
 ?>
 
 
@@ -35,16 +45,6 @@
     <span class="kakomu"><font color="black"><?php echo $CPU_tip ?></font></span>
     <font color="white">相手のカード:</font>
         <?php
-          //CPUが後攻で引くかどうか
-          if(count($CPU_hand) == 2 && $first == 1){
-            $CPU_result = result_num($CPU_hand);
-            if($CPU_tip > 1 && $CPU_result < 10){
-              $CPU_hand[] = array_shift($deck);
-              var_dump($CPU_hand);
-              $Pool_tip += 1;
-              $CPU_tip -= 1;
-            }
-          }
           if(count($CPU_hand) == 3){
               echo '<img src="images/z01.png" width="100" height="150">';
           }

@@ -96,7 +96,7 @@
 
         ?>
         <p>
-    <form action="index.php" method="POST">
+    <form action="firstpage.php" method="POST">
       <?php
         //互いにチップがあるときのみ表示
         if($CPU_tip > 0 && $Player_tip > 0){
@@ -112,7 +112,7 @@
       <input type='hidden' name='level' value=<?php echo $level; ?>>
     </form>  
 
-    <form action="firstpage.php" method="POST">
+    <form action="index.php" method="POST">
       <input type="submit" value="はじめから？">
       <input type="hidden" name="Pool_tip"　value= >
       <input type="hidden" name="CPU_tip"　value= >
