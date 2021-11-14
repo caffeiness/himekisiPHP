@@ -24,12 +24,6 @@
     <p>
     どちらかのチップが０になったら終了。
     <br>
-    <div class="image">
-      <p style="text-align:center;">
-        <img src="images/screenshot.png" width="700" height="500">
-      </p>
-    </div>
-    <p>
     <form action="firstpage.php" method="POST">
       <input type="submit" value="nomal">
       <input type='hidden' name='level' value="nomal">
@@ -38,5 +32,11 @@
       <input type="submit" value="hard">
       <input type='hidden' name='level' value="hard">
     </form>
+    <div class="image">
+      <p style="text-align:center;">
+        <img src="images/screenshot.png" width="700" height="500">
+      </p>
+    </div>
+    <p>
   </body>
 </html>
