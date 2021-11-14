@@ -73,7 +73,6 @@
         $CPU_result = result_num($CPU_hand);
         if($CPU_tip > 1 && $CPU_result < 10){
           $CPU_hand[] = array_shift($deck);
-          var_dump($CPU_hand);
           $Pool_tip += 1;
           $CPU_tip -= 1;
         }
